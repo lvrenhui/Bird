@@ -13,6 +13,7 @@ public class FirstReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(Tool.getTag(this), "receive broadcast:"+intent.getStringExtra("name"));
+        Log.i(Tool.getTag(this), "first receive broadcast:" + intent.getStringExtra("name"));
+        abortBroadcast();
     }
 }

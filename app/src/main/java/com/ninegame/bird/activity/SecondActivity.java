@@ -23,7 +23,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        ((Button) findViewById(R.id.btn_open)).setOnClickListener(this);
+        findViewById(R.id.btn_open).setOnClickListener(this);
         int tid = this.getTaskId();
         ((TextView) findViewById(R.id.activity_id)).setText("" + tid);
         Bundle bundle = getIntent().getExtras();

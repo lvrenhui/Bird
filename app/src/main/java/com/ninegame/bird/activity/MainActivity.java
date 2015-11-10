@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ((Button) findViewById(R.id.btn_service_start)).setOnClickListener(this);
-        ((Button) findViewById(R.id.btn_service_stop)).setOnClickListener(this);
-        ((Button) findViewById(R.id.btn_service_bind)).setOnClickListener(this);
-        ((Button) findViewById(R.id.btn_broadcat_send)).setOnClickListener(this);
+        findViewById(R.id.btn_service_start).setOnClickListener(this);
+        findViewById(R.id.btn_service_stop).setOnClickListener(this);
+        findViewById(R.id.btn_service_bind).setOnClickListener(this);
+        findViewById(R.id.btn_broadcat_send).setOnClickListener(this);
 
         int tid = this.getTaskId();
 
@@ -55,9 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sendBroad() {
-        Intent intent = new Intent(this, FirstReceiver.class);
+        Intent intent = new Intent("myreceiver");
         intent.putExtra("name", "lvrh");
-        sendBroadcast(intent);
+//        sendBroadcast(intent);
+        sendOrderedBroadcast(intent,"mypermission");
     }
 
 
