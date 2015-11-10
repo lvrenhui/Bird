@@ -1,4 +1,4 @@
-package com.ninegame.bird;
+package com.ninegame.bird.tool;
 
 /**
  * Created by lvrh on 15/11/8.

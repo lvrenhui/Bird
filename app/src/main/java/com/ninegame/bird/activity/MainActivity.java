@@ -1,18 +1,16 @@
-package com.ninegame.bird;
+package com.ninegame.bird.activity;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.ninegame.bird.R;
+import com.ninegame.bird.broadcast.FirstReceiver;
+import com.ninegame.bird.service.MyService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ((Button) findViewById(R.id.btn_service_start)).setOnClickListener(this);
         ((Button) findViewById(R.id.btn_service_stop)).setOnClickListener(this);
         ((Button) findViewById(R.id.btn_service_bind)).setOnClickListener(this);
-
+        ((Button) findViewById(R.id.btn_broadcat_send)).setOnClickListener(this);
 
         int tid = this.getTaskId();
 
@@ -46,11 +44,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_service_bind:
                 bindService();
                 break;
+            case R.id.btn_broadcat_send:
+                sendBroad();
+                break;
             default:
                 break;
 
 
         }
+    }
+
+    private void sendBroad() {
+        Intent intent = new Intent(this, FirstReceiver.class);
+        intent.putExtra("name", "lvrh");
+        sendBroadcast(intent);
     }
 
 

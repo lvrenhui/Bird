@@ -1,4 +1,4 @@
-package com.ninegame.bird;
+package com.ninegame.bird.activity;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -6,15 +6,16 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ninegame.bird.R;
+import com.ninegame.bird.service.MyService;
+import com.ninegame.bird.tool.Tool;
 
 public class SecondActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -1,10 +1,12 @@
-package com.ninegame.bird;
+package com.ninegame.bird.service;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.ninegame.bird.tool.Tool;
 
 public class MyService extends Service {
     public static final String ACT = "com.ninegame.bird.MyService";
