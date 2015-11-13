@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ninegame.bird.R;
-import com.ninegame.bird.broadcast.FirstReceiver;
 import com.ninegame.bird.service.MyService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -22,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_service_stop).setOnClickListener(this);
         findViewById(R.id.btn_service_bind).setOnClickListener(this);
         findViewById(R.id.btn_broadcat_send).setOnClickListener(this);
+        findViewById(R.id.btn_fragment_start).setOnClickListener(this);
 
         int tid = this.getTaskId();
 
@@ -47,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_broadcat_send:
                 sendBroad();
                 break;
+            case R.id.btn_fragment_start:
+                startFragment();
+                break;
             default:
                 break;
 
@@ -54,11 +56,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void startFragment() {
+        Intent intent = new Intent(this, EmpityActivity.class);
+        intent.putExtra("name", "lvrh");
+        startActivity(intent);
+
+    }
+
     private void sendBroad() {
         Intent intent = new Intent("myreceiver");
         intent.putExtra("name", "lvrh");
-//        sendBroadcast(intent);
-        sendOrderedBroadcast(intent,"mypermission");
+        sendBroadcast(intent, "mypermission");
+//        sendOrderedBroadcast(intent,"mypermission");
     }
 
 
