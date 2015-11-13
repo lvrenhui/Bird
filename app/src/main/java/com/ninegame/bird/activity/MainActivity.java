@@ -2,99 +2,60 @@ package com.ninegame.bird.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.text.TextUtils;
 
 import com.ninegame.bird.R;
-import com.ninegame.bird.service.MyService;
+import com.ninegame.bird.fragment.FragmentFactory;
+import com.ninegame.bird.framework.BaseFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
+
+    protected final static int LAYOUT_CONTAINER = android.R.id.content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_service_start).setOnClickListener(this);
-        findViewById(R.id.btn_service_stop).setOnClickListener(this);
-        findViewById(R.id.btn_service_bind).setOnClickListener(this);
-        findViewById(R.id.btn_broadcat_send).setOnClickListener(this);
-        findViewById(R.id.btn_fragment_start).setOnClickListener(this);
+        setContentView(R.layout.activity_empity);
 
-        int tid = this.getTaskId();
-
-        ((TextView) findViewById(R.id.activity_id)).setText("" + tid);
-
+        handleIntent(getIntent());
 
     }
 
+
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
 
-        switch (id) {
-            case R.id.btn_service_start:
-                openService();
-                break;
-            case R.id.btn_service_stop:
-                stopService();
-                break;
-            case R.id.btn_service_bind:
-                bindService();
-                break;
-            case R.id.btn_broadcat_send:
-                sendBroad();
-                break;
-            case R.id.btn_fragment_start:
-                startFragment();
-                break;
-            default:
-                break;
+    private void handleIntent(Intent intent) {
+        pushFragment(intent.getIntExtra("fragmentType", 0), LAYOUT_CONTAINER, null);
 
+    }
 
+    public void pushFragment(int type, int container, Bundle args) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fT = fragmentManager.beginTransaction();
+
+        Fragment fragment = null;
+        fragment = FragmentFactory.getFragmentByType(type);
+        if (fragment == fragmentManager.findFragmentById(container)) {
+            return;
         }
-    }
 
-    private void startFragment() {
-        Intent intent = new Intent(this, EmpityActivity.class);
-        intent.putExtra("name", "lvrh");
-        startActivity(intent);
+        if (fragment != null) {
+            if (args != null) {
+                ((BaseFragment) fragment).setBundleArguments(args);
+            }
 
-    }
+            fT.replace(container, fragment, String.valueOf(type));
+            fT.addToBackStack(String.valueOf(type));
+        }
 
-    private void sendBroad() {
-        Intent intent = new Intent("myreceiver");
-        intent.putExtra("name", "lvrh");
-        sendBroadcast(intent, "mypermission");
-//        sendOrderedBroadcast(intent,"mypermission");
-    }
-
-
-    private void stopService() {
-        stopService(new Intent(this, MyService.class));
-    }
-
-    private void openService() {
-        startService(new Intent(this, MyService.class));
-    }
-
-    private void bindService() {
-        openActivity();
-    }
-
-    void openActivity() {
-//        Intent intent = new Intent(this, SecondActivity.class);
-        Intent intent = new Intent("myaction");
-        Bundle bundle = new Bundle();
-        bundle.putString("name", "hui");
-        intent.putExtras(bundle);
-        startActivityForResult(intent, 1);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getApplicationContext(), "code:" + resultCode, Toast.LENGTH_SHORT).show();
+        fT.commitAllowingStateLoss();
     }
 }
