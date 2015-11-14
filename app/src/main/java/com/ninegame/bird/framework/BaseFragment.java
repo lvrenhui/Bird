@@ -50,9 +50,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener, Envi
         this.startFragment(var1, (Bundle) null);
     }
 
-    public void startFragment(Class var1, Bundle var2) {
+    public void startFragment(Class classObj, Bundle bundle) {
         if (this.env != null) {
-            this.env.startFragment(var1.getName(), var2);
+            this.env.startFragment(classObj.getName(), bundle);
         }
 
     }

@@ -8,8 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ninegame.bird.R;
-import com.ninegame.bird.fragment.FragmentFactory;
-import com.ninegame.bird.fragment.UserFragment;
+import com.ninegame.bird.fragment.FirstFragment;
 import com.ninegame.bird.service.MyService;
 
 public class LaunchActivity extends AppCompatActivity implements View.OnClickListener {
@@ -60,7 +59,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
 
     private void startFragment() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("fragmentType", FragmentFactory.ONE_FRAGMENT);
+        intent.putExtra("fragmentName", FirstFragment.class.getName());
         startActivity(intent);
 
     }

@@ -6,11 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
+import android.util.Log;
 
 import com.ninegame.bird.R;
-import com.ninegame.bird.fragment.FragmentFactory;
+import com.ninegame.bird.framework.FragmentFactory;
 import com.ninegame.bird.framework.BaseFragment;
+import com.ninegame.bird.tool.Tool;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,17 +34,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-        pushFragment(intent.getIntExtra("fragmentType", 0), LAYOUT_CONTAINER, null);
+        String className = intent.getStringExtra("fragmentName");
+        Log.w(Tool.getTag(this), className);
+
+        initFragment(className, intent);
 
     }
 
-    public void pushFragment(int type, int container, Bundle args) {
+    private void initFragment(String className, Intent intent) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        try {
+            Object o = Class.forName(className);
+            BaseFragment baseFragment = (BaseFragment) o;
+            if (fragmentManager.findFragmentById(LAYOUT_CONTAINER) == null) {
+                pushFragment(baseFragment, null);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pushFragment(BaseFragment fragment, Bundle args) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fT = fragmentManager.beginTransaction();
 
-        Fragment fragment = null;
-        fragment = FragmentFactory.getFragmentByType(type);
-        if (fragment == fragmentManager.findFragmentById(container)) {
+        if (fragment == fragmentManager.findFragmentById(LAYOUT_CONTAINER)) {
             return;
         }
 
@@ -51,11 +66,12 @@ public class MainActivity extends AppCompatActivity {
             if (args != null) {
                 ((BaseFragment) fragment).setBundleArguments(args);
             }
-
-            fT.replace(container, fragment, String.valueOf(type));
-            fT.addToBackStack(String.valueOf(type));
+            String className = fragment.getClass().getName();
+            fT.replace(LAYOUT_CONTAINER, fragment, className);
+            fT.addToBackStack(className);
         }
 
-        fT.commitAllowingStateLoss();
+//        fT.commitAllowingStateLoss();
+        fT.commit();
     }
 }

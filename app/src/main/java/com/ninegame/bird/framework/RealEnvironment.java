@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ninegame.bird.activity.MainActivity;
-import com.ninegame.bird.fragment.FragmentFactory;
 
 /**
  * Created by lvrh on 15/11/14.
@@ -42,12 +41,19 @@ final class RealEnvironment implements Environment {
     }
 
     @Override
-    public void startFragment(String var1, Bundle var2) {
+    public void startFragment(String className, Bundle bundle) {
         //tmp code
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("fragmentType", FragmentFactory.TWO_FRAGMENT);
-        context.startActivity(intent);
+        intent.putExtra("fragmentName", className);
+
+        try {
+            Object o = Class.forName(className);
+            BaseFragment baseFragment = (BaseFragment) o;
+            ((MainActivity) getCurrentActivity()).pushFragment(baseFragment, bundle);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 

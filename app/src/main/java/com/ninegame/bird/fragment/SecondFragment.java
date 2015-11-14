@@ -1,8 +1,5 @@
 package com.ninegame.bird.fragment;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ninegame.bird.R;
+import com.ninegame.bird.framework.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +16,7 @@ import com.ninegame.bird.R;
  * Use the {@link SecondFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SecondFragment extends Fragment implements View.OnClickListener {
+public class SecondFragment extends BaseFragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -83,7 +81,8 @@ public class SecondFragment extends Fragment implements View.OnClickListener {
     }
 
     private void openOne() {
-        startActivity(new Intent(getActivity(), UserFragment.class));
+
+        startFragment(FirstFragment.class);
     }
 
 

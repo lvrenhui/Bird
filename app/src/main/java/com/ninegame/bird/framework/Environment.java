@@ -18,6 +18,6 @@ public interface Environment {
     void setApplicationContext(Context var1);
 
 
-    void startFragment(String var1, Bundle var2);
+    void startFragment(String className, Bundle bundle);
 
 }
