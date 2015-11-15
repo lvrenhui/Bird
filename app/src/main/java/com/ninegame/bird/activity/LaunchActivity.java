@@ -48,7 +48,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
                 sendBroad();
                 break;
             case R.id.btn_fragment_start:
-                startFragment();
+                open_First();
                 break;
             default:
                 break;
@@ -57,7 +57,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void startFragment() {
+    private void open_First() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("fragmentName", FirstFragment.class.getName());
         startActivity(intent);

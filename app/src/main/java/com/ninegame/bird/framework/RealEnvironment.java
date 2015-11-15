@@ -48,10 +48,14 @@ final class RealEnvironment implements Environment {
         intent.putExtra("fragmentName", className);
 
         try {
-            Object o = Class.forName(className);
+            Object o = Class.forName(className).newInstance();
             BaseFragment baseFragment = (BaseFragment) o;
             ((MainActivity) getCurrentActivity()).pushFragment(baseFragment, bundle);
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 

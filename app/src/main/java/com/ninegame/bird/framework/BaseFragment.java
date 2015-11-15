@@ -27,6 +27,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener, Envi
         if (getEnvironment() == null) {
             setEnvironment(FrameworkFacade.getInstance().getEnvironment());
         }
+        getEnvironment().setCurrentActivity(getActivity());
     }
 
     @Override
@@ -71,5 +72,15 @@ public class BaseFragment extends Fragment implements View.OnClickListener, Envi
     @Override
     public void onClick(View v) {
 
+    }
+
+    /**
+     * 处理返回事件
+     *
+     * @return true表示在fragment内部已经完成了对返回事件的处理，外部不需要再处理;
+     * false表示外部需要对返回事件继续处理
+     */
+    public boolean goBack() {
+        return false;
     }
 }

@@ -13,6 +13,8 @@ import com.ninegame.bird.framework.FragmentFactory;
 import com.ninegame.bird.framework.BaseFragment;
 import com.ninegame.bird.tool.Tool;
 
+import java.util.logging.Logger;
+
 public class MainActivity extends AppCompatActivity {
 
     protected final static int LAYOUT_CONTAINER = android.R.id.content;
@@ -44,12 +46,16 @@ public class MainActivity extends AppCompatActivity {
     private void initFragment(String className, Intent intent) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         try {
-            Object o = Class.forName(className);
+            Object o = Class.forName(className).newInstance();
             BaseFragment baseFragment = (BaseFragment) o;
             if (fragmentManager.findFragmentById(LAYOUT_CONTAINER) == null) {
                 pushFragment(baseFragment, null);
             }
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -58,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fT = fragmentManager.beginTransaction();
 
-        if (fragment == fragmentManager.findFragmentById(LAYOUT_CONTAINER)) {
+        if (fragment == getCurrentFragment()) {
             return;
         }
 
@@ -73,5 +79,37 @@ public class MainActivity extends AppCompatActivity {
 
 //        fT.commitAllowingStateLoss();
         fT.commit();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Fragment baseFragment = getCurrentFragment();
+        if (baseFragment instanceof BaseFragment) {
+            if (((BaseFragment) baseFragment).goBack()) {
+                return;
+            }
+        }
+
+        popFragment();
+    }
+
+    public Fragment getCurrentFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(LAYOUT_CONTAINER);
+        return fragment;
+    }
+
+    public void popFragment() {
+        /* 解决fragment addToBackStack后，按返回键出现空白的Activity问题 */
+        if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+            finish();
+
+        } else {
+            try {
+                super.onBackPressed();//FIXME : 这里不应该用onBackPressed来关闭页面
+            } catch (Exception e) {
+                Log.w(Tool.getTag(this), e);
+            }
+        }
     }
 }
