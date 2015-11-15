@@ -6,24 +6,38 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.ninegame.bird.R;
 import com.ninegame.bird.framework.BaseFragment;
 import com.ninegame.bird.tool.LogTool;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
-    protected final static int LAYOUT_CONTAINER = android.R.id.content;
+    protected final static int LAYOUT_CONTAINER = R.id.container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_empity);
-
+        setContentView(R.layout.activity_main);
+        initBar();
         handleIntent(getIntent());
+
     }
 
+    private void initBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        toolbar.setTitle("menu");
+        toolbar.setSubtitle("sub menu");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.bird);
+        toolbar.setOnMenuItemClickListener(this);
+
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -107,5 +121,21 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(LogTool.getTag(this), e);
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

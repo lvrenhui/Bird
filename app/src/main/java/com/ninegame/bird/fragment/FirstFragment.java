@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ninegame.bird.R;
+import com.ninegame.bird.activity.MainActivity;
 import com.ninegame.bird.framework.BaseFragment;
 
 /**
@@ -64,6 +65,8 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user, container, false);
         v.findViewById(R.id.btn_start_fragment).setOnClickListener(this);
+        v.findViewById(R.id.btn_del_menu).setOnClickListener(this);
+
         return v;
     }
 
@@ -74,9 +77,16 @@ public class FirstFragment extends BaseFragment implements View.OnClickListener 
             case R.id.btn_start_fragment:
                 openTwo();
                 break;
+            case R.id.btn_del_menu:
+                hideMenu();
+                break;
             default:
                 break;
         }
+    }
+
+    private void hideMenu() {
+        ((MainActivity)this.getEnvironment().getCurrentActivity()).setSupportActionBar(null);
     }
 
     private void openTwo() {

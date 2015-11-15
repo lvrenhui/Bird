@@ -23,7 +23,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_launch);
         findViewById(R.id.btn_service_start).setOnClickListener(this);
         findViewById(R.id.btn_service_stop).setOnClickListener(this);
         findViewById(R.id.btn_service_bind).setOnClickListener(this);
@@ -36,6 +36,8 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
 
 
     }
+
+
 
     @Override
     public void onClick(View v) {

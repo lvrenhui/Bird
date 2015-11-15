@@ -24,8 +24,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:launchMode="singleTask"></activity>
         <activity
             android:name=".activity.SecondActivity"
             android:label="@string/title_activity_second">
