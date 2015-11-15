@@ -3,6 +3,7 @@ package com.ninegame.bird.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,8 +11,14 @@ import android.widget.Toast;
 import com.ninegame.bird.R;
 import com.ninegame.bird.fragment.FirstFragment;
 import com.ninegame.bird.service.MyService;
+import com.ninegame.bird.tool.TaskExecutor;
 
 public class LaunchActivity extends AppCompatActivity implements View.OnClickListener {
+    /**
+     * 连续按两次返回键就退出
+     */
+    private boolean mIsWaitingExit = false;
+    public final static int EXIT_TOAST_DURATION = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,5 +104,32 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Toast.makeText(getApplicationContext(), "code:" + resultCode, Toast.LENGTH_SHORT).show();
+    }
+
+    public void exitToast() {
+        if (mIsWaitingExit) {
+            mIsWaitingExit = false;
+            this.finish();
+        } else {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mIsWaitingExit = true;
+            TaskExecutor.scheduleTask(EXIT_TOAST_DURATION, new Runnable() {
+                @Override
+                public void run() {
+                    mIsWaitingExit = false;
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitToast();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

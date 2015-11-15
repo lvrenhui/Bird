@@ -9,11 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.ninegame.bird.R;
-import com.ninegame.bird.framework.FragmentFactory;
 import com.ninegame.bird.framework.BaseFragment;
-import com.ninegame.bird.tool.Tool;
-
-import java.util.logging.Logger;
+import com.ninegame.bird.tool.LogTool;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_empity);
 
         handleIntent(getIntent());
-
     }
 
 
@@ -37,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleIntent(Intent intent) {
         String className = intent.getStringExtra("fragmentName");
-        Log.w(Tool.getTag(this), className);
+        Log.w(LogTool.getTag(this), className);
 
         initFragment(className, intent);
 
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 super.onBackPressed();//FIXME : 这里不应该用onBackPressed来关闭页面
             } catch (Exception e) {
-                Log.w(Tool.getTag(this), e);
+                Log.w(LogTool.getTag(this), e);
             }
         }
     }

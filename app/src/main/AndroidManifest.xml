@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".activity.SecondActivity"
             android:label="@string/title_activity_second">
             <intent-filter>
@@ -58,9 +62,7 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".activity.MainActivity"
-            android:launchMode="singleTask"></activity>
+
     </application>
 
 </manifest>

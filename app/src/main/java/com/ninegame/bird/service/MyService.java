@@ -6,7 +6,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.ninegame.bird.tool.Tool;
+import com.ninegame.bird.tool.LogTool;
 
 public class MyService extends Service {
     public static final String ACT = "com.ninegame.bird.MyService";
@@ -19,21 +19,21 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(Tool.getTag(this), "serice create");
+        Log.i(LogTool.getTag(this), "serice create");
 
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(Tool.getTag(this), "serice cmd start");
+        Log.i(LogTool.getTag(this), "serice cmd start");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        Log.i(Tool.getTag(this), "bind service");
+        Log.i(LogTool.getTag(this), "bind service");
         if (myBinder == null) {
             myBinder = new MyBinder();
         }
@@ -44,7 +44,7 @@ public class MyService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(Tool.getTag(this), "service stop");
+        Log.i(LogTool.getTag(this), "service stop");
     }
 
     public class MyBinder extends Binder {

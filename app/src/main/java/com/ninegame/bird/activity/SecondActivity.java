@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.ninegame.bird.R;
 import com.ninegame.bird.service.MyService;
-import com.ninegame.bird.tool.Tool;
+import com.ninegame.bird.tool.LogTool;
 
 public class SecondActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,12 +38,12 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
     private ServiceConnection serviceconn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.i(Tool.getTag(this), "service bind connected");
+            Log.i(LogTool.getTag(this), "service bind connected");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Log.i(Tool.getTag(this), "service bind disconnected");
+            Log.i(LogTool.getTag(this), "service bind disconnected");
         }
     };
 
@@ -71,7 +71,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         unbindService(serviceconn);
-        Log.i(Tool.getTag(this), "service unbind ");
+        Log.i(LogTool.getTag(this), "service unbind ");
 
     }
 }
