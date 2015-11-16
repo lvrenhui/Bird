@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ninegame.bird.R;
 import com.ninegame.bird.framework.BaseFragment;
@@ -24,18 +25,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initBar();
+        initAppBar();
         handleIntent(getIntent());
 
     }
 
-    private void initBar() {
+
+    private void initAppBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.mytoolbar);
-        toolbar.setTitle("menu");
-        toolbar.setSubtitle("sub menu");
+        toolbar.setTitle("Bird");
+        toolbar.setSubtitle("little bird fly");
+        toolbar.setNavigationIcon(R.mipmap.bird);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.bird);
         toolbar.setOnMenuItemClickListener(this);
+
 
     }
 
@@ -130,12 +133,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.action_edit) {
+            Toast.makeText(getApplicationContext(), "yes,menu item", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(getApplicationContext(), "itemid:" + item.getItemId(), Toast.LENGTH_SHORT).show();
         return false;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 }

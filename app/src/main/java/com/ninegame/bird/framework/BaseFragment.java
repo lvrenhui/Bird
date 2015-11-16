@@ -3,6 +3,7 @@ package com.ninegame.bird.framework;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class BaseFragment extends Fragment implements View.OnClickListener, Envi
         // Required empty public constructor
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +30,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener, Envi
             setEnvironment(FrameworkFacade.getInstance().getEnvironment());
         }
         getEnvironment().setCurrentActivity(getActivity());
-    }
+        showMenu();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
     }
-
 
     public void setBundleArguments(Bundle args) {
         this.mArgs = args;
@@ -82,5 +77,17 @@ public class BaseFragment extends Fragment implements View.OnClickListener, Envi
      */
     public boolean goBack() {
         return false;
+    }
+
+    AppCompatActivity getMainActivity() {
+        return (AppCompatActivity) getEnvironment().getCurrentActivity();
+    }
+
+    protected void hideMenu() {
+        getMainActivity().getSupportActionBar().hide();
+    }
+
+    protected void showMenu() {
+        getMainActivity().getSupportActionBar().show();
     }
 }

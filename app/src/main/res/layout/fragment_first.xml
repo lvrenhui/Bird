@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.ninegame.bird.fragment.FirstFragment">
+
+
+    <Button
+        android:id="@+id/btn_hide_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="隐藏菜单" />
+
+    <Button
+        android:id="@+id/btn_show_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示菜单"
+        android:layout_toRightOf="@+id/btn_hide_menu"
+        />
+
+    <Button
+        android:id="@+id/btn_start_second_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_hide_menu"
+        android:text="打开" />
+
+</RelativeLayout>
