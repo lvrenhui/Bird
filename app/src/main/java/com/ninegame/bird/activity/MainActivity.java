@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.ninegame.bird.R;
 import com.ninegame.bird.framework.BaseFragment;
 import com.ninegame.bird.tool.LogTool;
+
+import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
@@ -35,9 +38,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.mytoolbar);
         toolbar.setTitle("Bird");
         toolbar.setSubtitle("little bird fly");
-        toolbar.setNavigationIcon(R.mipmap.bird);
+        toolbar.setNavigationIcon(R.drawable.left_arrow);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
     }
@@ -128,15 +139,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.action_edit) {
-            Toast.makeText(getApplicationContext(), "yes,menu item", Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Toast.makeText(getApplicationContext(), "yes,menu item", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
         }
-        Toast.makeText(getApplicationContext(), "itemid:" + item.getItemId(), Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -145,5 +158,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getMenuInflater().inflate(R.menu.menu, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        setOverflowIconVisible(featureId, menu);
+        return super.onMenuOpened(featureId, menu);
+    }
+
+    /**
+     * 显示OverflowMenu的Icon
+     *
+     * @param featureId
+     * @param menu
+     */
+    private void setOverflowIconVisible(int featureId, Menu menu) {
+        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod(
+                            "setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                    Log.d("OverflowIconVisible", e.getMessage());
+                }
+            }
+        }
     }
 }

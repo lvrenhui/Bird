@@ -24,7 +24,20 @@
 
         <item name="colorPrimary">@color/accent_material_dark</item>
         <item name="colorPrimaryDark">@color/accent_material_light</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
+        <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButtonStyle</item>
+
         <!--<item name="android:windowBackground">@color/dim_foreground_material_dark</item>-->
     </style>
 
+
+    <!--取消菜单在顶部-->
+    <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">1px</item>
+    </style>
+
+    <style name="ActionBarOverflowButtonStyle" parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/menu</item>
+    </style>
 </resources>
