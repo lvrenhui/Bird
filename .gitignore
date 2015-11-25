@@ -5,3 +5,8 @@
 .DS_Store
 /build
 /captures
+app/build/
+.idea/
+app/apk/
+gradle/wrapper/
+*.iml

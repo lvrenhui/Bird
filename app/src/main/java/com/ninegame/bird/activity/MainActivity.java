@@ -161,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         setOverflowIconVisible(featureId, menu);
